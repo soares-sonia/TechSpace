@@ -1,0 +1,54 @@
+<ion-content>
+  <div class="header">
+    <h1>Carrinho de Compras</h1>
+  </div>
+
+  <div class="list" *ngIf="!isLoadingCart">
+    <ion-list *ngFor="let product of cart">
+      <ion-card *ngIf="product.cart">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <img [src]="product.image" alt="Product Image" style="height: 170px; height: 120px;">        
+            </ion-col>
+
+            <ion-col>
+              <ion-card-content>
+                <p><strong>Marca:</strong></p>
+                <p [ngClass]="{'small-font': isStringTooLong(product.Marca, 15)}">{{ product.Marca }}</p>
+                <p><strong>Modelo:</strong></p>
+                <p [ngClass]="{'small-font': isStringTooLong(product.Modelo, 15)}">{{ product.Modelo }}</p>
+              </ion-card-content>
+            </ion-col>            
+          </ion-row>
+
+          <ion-row class="center">
+            <ion-col>
+              <p>{{ product.Descricao }}</p>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="center">
+            <ion-col size="6">
+              <p class="click"><span (click)="removeProduct(product.id || 0)"><strong>Remover</strong></span></p>
+            </ion-col>
+            
+            <ion-col size="6">
+              <p class="price">Preço: <strong>{{ product.Preco | currency:'EUR':'symbol-narrow':'1.2-2' }}</strong></p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </ion-list>
+  </div>
+  
+
+  <ion-item slot="fixed">
+    <h1>Total: {{total | currency:'EUR':'symbol-narrow':'1.2-2' }}</h1>
+
+    <ion-button (click)="finishOrder()" expand="block" shape="round" >
+      Finalizar Compra
+    </ion-button>
+  </ion-item>
+
+</ion-content>
